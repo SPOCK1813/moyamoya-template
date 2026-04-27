@@ -32,9 +32,11 @@ h1{
 }
 
 .sub{
-  color:#bbbbbb;
-  font-size:15px;
-  margin-bottom:28px;
+  color:#dddddd;
+  font-size:18px;
+  line-height:1.9;
+  margin-bottom:30px;
+  font-weight:500;
 }
 
 .card{
@@ -91,12 +93,6 @@ textarea{
   margin-top:14px;
 }
 
-.step{
-  margin-bottom:14px;
-  padding-bottom:14px;
-  border-bottom:1px solid #333;
-}
-
 .footer{
   margin-top:24px;
   color:#999;
@@ -109,7 +105,10 @@ textarea{
 <body>
 <div class="container">
 
-<h1>心の中のモヤモヤを外に出すテンプレ</h1>
+<h1>
+心の中のモヤモヤを<br>
+外に出すテンプレ
+</h1>
 
 <p class="sub">
 誰にも言えないけど、<br>
@@ -122,12 +121,13 @@ textarea{
 <h2>使い方を選んでください</h2>
 
 <button onclick="showAI()">AIで進める</button>
-<button class="secondary" onclick="showPaper()">紙・メモで進める</button>
+<button class="secondary" onclick="showPaper()">紙・メモ・スマホメモで進める</button>
 </div>
 
 <!-- AI -->
 <div class="card hidden" id="aiBox">
 <h2>AIで進める</h2>
+
 <p>
 下の文章をコピーして、ChatGPTなどのAIに貼り付けてください。
 </p>
@@ -159,22 +159,36 @@ STEP6：次の一歩
 
 <!-- PAPER -->
 <div class="card hidden" id="paperBox">
-<h2>紙・メモで進める</h2>
+<h2>紙・メモ・スマホメモで進める</h2>
 
-<div class="step"><strong>STEP1</strong><br>今日あったこと（事実だけ）</div>
-<div class="step"><strong>STEP2</strong><br>正直な感情を書く</div>
-<div class="step"><strong>STEP3</strong><br>何が引っかかったか</div>
-<div class="step"><strong>STEP4</strong><br>本当はどうしたいか</div>
-<div class="step"><strong>STEP5</strong><br>別の視点で見ると？</div>
-<div class="step"><strong>STEP6</strong><br>今できる小さい一歩</div>
+<p>
+下のテンプレをコピーして、メモアプリに貼り付けても使えます。
+</p>
 
-<p>全部やらなくてもOKです。</p>
+<textarea id="paperText">STEP1 今日あったこと（事実だけ）
+
+STEP2 正直な感情を書く
+
+STEP3 何が引っかかったか
+
+STEP4 本当はどうしたいか
+
+STEP5 別の視点で見ると？
+
+STEP6 今できる小さい一歩</textarea>
+
+<button onclick="copyPaper()">テンプレをコピーする</button>
+
+<p style="margin-top:16px;">全部やらなくてもOKです。</p>
 </div>
 
 <!-- AFTER FORM -->
 <div class="card">
 <h2>終わったらこちら</h2>
-<p>少しでも変化があったか確認してみてください。</p>
+
+<p>
+少しでも変化があったか確認してみてください。
+</p>
 
 <a class="btn" href="ここに事後フォームURL" target="_blank">
 事後フォームへ進む
@@ -201,6 +215,14 @@ function showPaper(){
 
 function copyText(){
   const text = document.getElementById("aiText");
+  text.select();
+  text.setSelectionRange(0,99999);
+  navigator.clipboard.writeText(text.value);
+  alert("コピーしました");
+}
+
+function copyPaper(){
+  const text = document.getElementById("paperText");
   text.select();
   text.setSelectionRange(0,99999);
   navigator.clipboard.writeText(text.value);
