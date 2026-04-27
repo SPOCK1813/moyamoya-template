@@ -109,7 +109,7 @@ return;
 
 document.getElementById("resultBox").innerHTML = "読み込み中...";
 
-const url = "ここにAppsScriptURL?id=" + encodeURIComponent(id);
+const url = "https://script.google.com/macros/s/AKfycbzez2jeJz_6HAYziW0PZ10GlXYecqPbwsFCKb-1Wsc2GL_-MLYSRPQGT1IPbPZiA5ya/exec=" + encodeURIComponent(id);
 
 try{
 const res = await fetch(url);
