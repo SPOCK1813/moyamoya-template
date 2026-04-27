@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>心の中のモヤモヤを外に出すテンプレ</title>
+
+<style>
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+}
+
+body{
+  font-family:-apple-system,BlinkMacSystemFont,"Helvetica Neue",sans-serif;
+  background:#0f0f0f;
+  color:#ffffff;
+  line-height:1.7;
+  padding:24px 16px 60px;
+}
+
+.container{
+  max-width:700px;
+  margin:0 auto;
+}
+
+h1{
+  font-size:30px;
+  line-height:1.4;
+  margin-bottom:14px;
+}
+
+.sub{
+  color:#bbbbbb;
+  font-size:15px;
+  margin-bottom:28px;
+}
+
+.card{
+  background:#1b1b1b;
+  border:1px solid #2d2d2d;
+  border-radius:18px;
+  padding:20px;
+  margin-bottom:18px;
+}
+
+h2{
+  font-size:22px;
+  margin-bottom:12px;
+}
+
+p{
+  margin-bottom:14px;
+}
+
+button,a.btn{
+  display:block;
+  width:100%;
+  text-align:center;
+  text-decoration:none;
+  color:#fff;
+  background:#18b86a;
+  border:none;
+  border-radius:14px;
+  padding:16px;
+  font-size:17px;
+  font-weight:700;
+  margin-top:12px;
+  cursor:pointer;
+}
+
+button.secondary{
+  background:#2e2e2e;
+}
+
+.hidden{
+  display:none;
+}
+
+textarea{
+  width:100%;
+  min-height:260px;
+  background:#111;
+  color:#fff;
+  border:1px solid #333;
+  border-radius:14px;
+  padding:16px;
+  font-size:14px;
+  line-height:1.7;
+  margin-top:14px;
+}
+
+.step{
+  margin-bottom:14px;
+  padding-bottom:14px;
+  border-bottom:1px solid #333;
+}
+
+.footer{
+  margin-top:24px;
+  color:#999;
+  font-size:13px;
+  text-align:center;
+}
+</style>
+</head>
+
+<body>
+<div class="container">
+
+<h1>心の中のモヤモヤを外に出すテンプレ</h1>
+
+<p class="sub">
+誰にも言えないけど、<br>
+ずっと心に残ることってない？<br><br>
+今の気持ちを整える前に、<br>
+一度ちゃんと外に出すためのツールです。
+</p>
+
+<div class="card">
+<h2>使い方を選んでください</h2>
+
+<button onclick="showAI()">AIで進める</button>
+<button class="secondary" onclick="showPaper()">紙・メモで進める</button>
+</div>
+
+<!-- AI -->
+<div class="card hidden" id="aiBox">
+<h2>AIで進める</h2>
+<p>
+下の文章をコピーして、ChatGPTなどのAIに貼り付けてください。
+</p>
+
+<textarea id="aiText">あなたは聞き役です。
+目的は、私の感情を整理することです。
+
+以下のルールで進めてください。
+・一度に1つだけ質問してください
+・私の答えを否定せず、そのまま受け止めてください
+・必要に応じて深掘りしてください
+・各STEPが終わったら次へ進んでください
+・スキップと言われたら次へ進んでください
+・アドバイスは最後だけにしてください
+
+STEP1：今日あったこと（事実）
+STEP2：正直な感情
+STEP3：引っかかった理由
+STEP4：本音
+STEP5：別の視点
+STEP6：次の一歩
+
+最後に内容を整理してまとめてください。
+
+まずSTEP1から、1つ目の質問をしてください。</textarea>
+
+<button onclick="copyText()">テンプレをコピーする</button>
+</div>
+
+<!-- PAPER -->
+<div class="card hidden" id="paperBox">
+<h2>紙・メモで進める</h2>
+
+<div class="step"><strong>STEP1</strong><br>今日あったこと（事実だけ）</div>
+<div class="step"><strong>STEP2</strong><br>正直な感情を書く</div>
+<div class="step"><strong>STEP3</strong><br>何が引っかかったか</div>
+<div class="step"><strong>STEP4</strong><br>本当はどうしたいか</div>
+<div class="step"><strong>STEP5</strong><br>別の視点で見ると？</div>
+<div class="step"><strong>STEP6</strong><br>今できる小さい一歩</div>
+
+<p>全部やらなくてもOKです。</p>
+</div>
+
+<!-- AFTER FORM -->
+<div class="card">
+<h2>終わったらこちら</h2>
+<p>少しでも変化があったか確認してみてください。</p>
+
+<a class="btn" href="ここに事後フォームURL" target="_blank">
+事後フォームへ進む
+</a>
+</div>
+
+<p class="footer">
+正解を出すことではなく、<br>
+外に出すことが目的です。
+</p>
+
+</div>
+
+<script>
+function showAI(){
+  document.getElementById("aiBox").classList.remove("hidden");
+  document.getElementById("paperBox").classList.add("hidden");
+}
+
+function showPaper(){
+  document.getElementById("paperBox").classList.remove("hidden");
+  document.getElementById("aiBox").classList.add("hidden");
+}
+
+function copyText(){
+  const text = document.getElementById("aiText");
+  text.select();
+  text.setSelectionRange(0,99999);
+  navigator.clipboard.writeText(text.value);
+  alert("コピーしました");
+}
+</script>
+
+</body>
+</html>
