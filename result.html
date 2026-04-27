@@ -98,38 +98,38 @@ button{
 </div>
 
 <script>
-async function loadResult(){
+function loadResult(){
+  const id = document.getElementById("userId").value.trim();
 
-const id = document.getElementById("userId").value.trim();
+  if(!id){
+    document.getElementById("resultBox").innerHTML = "IDを入力してください。";
+    return;
+  }
 
-if(!id){
-document.getElementById("resultBox").innerHTML = "IDを入力してください。";
-return;
+  document.getElementById("resultBox").innerHTML = "読み込み中...";
+
+  const callbackName = "showResult";
+  const script = document.createElement("script");
+
+  script.src = "https://script.google.com/macros/s/AKfycbz9dPGM0XZggoN_pmkSF1Oc739izB05QkklvF1dL6FKQ8pX_RJVO_XWsf1JlgM24qDO/exec?id="
+    + encodeURIComponent(id)
+    + "&callback="
+    + callbackName;
+
+  document.body.appendChild(script);
 }
 
-document.getElementById("resultBox").innerHTML = "読み込み中...";
+function showResult(data){
+  if(data.error){
+    document.getElementById("resultBox").innerHTML = data.error;
+    return;
+  }
 
-const url = "https://script.google.com/macros/s/AKfycbz9dPGM0XZggoN_pmkSF1Oc739izB05QkklvF1dL6FKQ8pX_RJVO_XWsf1JlgM24qDO/exec" + encodeURIComponent(id);
-
-try{
-const res = await fetch(url);
-const data = await res.json();
-
-if(data.error){
-document.getElementById("resultBox").innerHTML = "該当データがありません。";
-return;
-}
-
-document.getElementById("resultBox").innerHTML = `
-今の気分：${data.mood_before} → ${data.mood_after} （${data.mood_diff}）<br>
-頭の整理度：${data.clear_before} → ${data.clear_after} （${data.clear_diff}）<br>
-心の軽さ：${data.light_before} → ${data.light_after} （${data.light_diff}）
-`;
-
-}catch(e){
-document.getElementById("resultBox").innerHTML = "読み込みエラーです。";
-}
-
+  document.getElementById("resultBox").innerHTML = `
+    今の気分：${data.mood_before} → ${data.mood_after}（${data.mood_diff}）<br>
+    頭の整理度：${data.clear_before} → ${data.clear_after}（${data.clear_diff}）<br>
+    心の軽さ：${data.light_before} → ${data.light_after}（${data.light_diff}）
+  `;
 }
 </script>
 
