@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>結果確認ページ</title>
+
+<style>
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+}
+
+body{
+  background:#0f0f0f;
+  color:#fff;
+  font-family:-apple-system,BlinkMacSystemFont,"Helvetica Neue",sans-serif;
+  padding:24px 16px 60px;
+}
+
+.container{
+  max-width:700px;
+  margin:0 auto;
+}
+
+h1{
+  font-size:28px;
+  margin-bottom:18px;
+  line-height:1.4;
+}
+
+.card{
+  background:#1b1b1b;
+  border:1px solid #2d2d2d;
+  border-radius:18px;
+  padding:20px;
+  margin-bottom:18px;
+}
+
+input{
+  width:100%;
+  padding:16px;
+  border-radius:14px;
+  border:none;
+  background:#111;
+  color:#fff;
+  font-size:16px;
+  margin-top:12px;
+}
+
+button{
+  width:100%;
+  padding:16px;
+  border:none;
+  border-radius:14px;
+  background:#18b86a;
+  color:#fff;
+  font-size:17px;
+  font-weight:700;
+  margin-top:14px;
+}
+
+.result{
+  line-height:2;
+  font-size:17px;
+}
+
+.small{
+  color:#bbb;
+  font-size:14px;
+  margin-top:8px;
+}
+</style>
+</head>
+
+<body>
+<div class="container">
+
+<h1>あなたの変化を確認する</h1>
+
+<div class="card">
+<p>フォームで入力したIDを入れてください。</p>
+
+<input type="text" id="userId" placeholder="例：blue072">
+
+<button onclick="loadResult()">結果を見る</button>
+
+<p class="small">
+本名・社員番号などではなく、自分で決めたIDを使ってください。
+</p>
+</div>
+
+<div class="card result" id="resultBox">
+結果はここに表示されます。
+</div>
+
+</div>
+
+<script>
+async function loadResult(){
+
+const id = document.getElementById("userId").value.trim();
+
+if(!id){
+document.getElementById("resultBox").innerHTML = "IDを入力してください。";
+return;
+}
+
+document.getElementById("resultBox").innerHTML = "読み込み中...";
+
+const url = "ここにAppsScriptURL?id=" + encodeURIComponent(id);
+
+try{
+const res = await fetch(url);
+const data = await res.json();
+
+if(data.error){
+document.getElementById("resultBox").innerHTML = "該当データがありません。";
+return;
+}
+
+document.getElementById("resultBox").innerHTML = `
+今の気分：${data.mood_before} → ${data.mood_after} （${data.mood_diff}）<br>
+頭の整理度：${data.clear_before} → ${data.clear_after} （${data.clear_diff}）<br>
+心の軽さ：${data.light_before} → ${data.light_after} （${data.light_diff}）
+`;
+
+}catch(e){
+document.getElementById("resultBox").innerHTML = "読み込みエラーです。";
+}
+
+}
+</script>
+
+</body>
+</html>
