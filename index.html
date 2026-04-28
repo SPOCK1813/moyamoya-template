@@ -280,22 +280,22 @@ function setAI(ai){
 
   document.getElementById("selectedAI").innerHTML =
     "現在：" + label + "<br><span style='color:#999; font-size:13px;'>" + desc + "</span>";
-}
 
   document.querySelectorAll(".aiChoice").forEach(btn=>{
-  btn.classList.remove("active");
-});
+    btn.classList.remove("active");
+  });
 
-document.getElementById("ai-chatgpt").innerHTML = "ChatGPT（おすすめ）";
-document.getElementById("ai-gemini").innerHTML = "Gemini";
-document.getElementById("ai-grok").innerHTML = "Grok";
+  document.getElementById("ai-chatgpt").innerHTML = "ChatGPT（おすすめ）";
+  document.getElementById("ai-gemini").innerHTML = "Gemini";
+  document.getElementById("ai-grok").innerHTML = "Grok";
 
-const activeBtn = document.getElementById("ai-" + ai);
-activeBtn.classList.add("active");
+  const activeBtn = document.getElementById("ai-" + ai);
+  activeBtn.classList.add("active");
 
-if(ai === "chatgpt") activeBtn.innerHTML = "✓ ChatGPT（おすすめ）";
-if(ai === "gemini") activeBtn.innerHTML = "✓ Gemini";
-if(ai === "grok") activeBtn.innerHTML = "✓ Grok";
+  if(ai === "chatgpt") activeBtn.innerHTML = "✓ ChatGPT（おすすめ）";
+  if(ai === "gemini") activeBtn.innerHTML = "✓ Gemini";
+  if(ai === "grok") activeBtn.innerHTML = "✓ Grok";
+}
 
 function aiBase(){
 
@@ -341,6 +341,20 @@ Give one personalized healing action based on the user's situation.
 Recommend one suitable sound/music style from:
 rain sounds / quiet piano / lo-fi / ambient / healing instrumental / uplifting pop / silence
 
+【今日のコンディション】
+Choose ONLY ONE best match from:
+整える日 🌿
+整理する日 📒
+安心を作る日 🫧
+放出する日 🔥
+回復する日 🌙
+距離を取る日 🚪
+見守る日 ✨
+動いていい日 🚀
+
+Explain briefly why.
+Then recommend one small action for today.
+
 【明日への一言】
 Give one warm encouraging sentence.
 
@@ -373,10 +387,34 @@ After each answer:
 Final output must include:
 
 【今の状態】
+Briefly summarize the user's emotional state.
+
 【原因かもしれないこと】
+Summarize the likely cause clearly.
+
 【今夜の回復提案】
+Give one realistic healing action for tonight.
+
 【おすすめ音】
+Recommend one suitable sound from:
+rain sounds / quiet piano / lo-fi / ambient / healing instrumental / silence
+
+【今日のコンディション】
+Choose ONLY ONE best match from:
+整える日 🌿
+整理する日 📒
+安心を作る日 🫧
+放出する日 🔥
+回復する日 🌙
+距離を取る日 🚪
+見守る日 ✨
+動いていい日 🚀
+
+Explain briefly why.
+Then recommend one small action for today.
+
 【明日への一言】
+Give one short encouraging sentence.
 
 Healing suggestions should fit the user's emotional state and be easy to do today.`;
 }
@@ -400,12 +438,10 @@ Your goal is NOT endless deep questioning.
 Your goal is to help the user feel lighter within a short conversation.
 
 Conversation control:
-
 - Ask exactly 3 questions maximum.
 - After each user answer:
 1. Briefly acknowledge the feeling.
 2. Ask ONE new useful follow-up question.
-
 - After the 3rd user answer, you MUST stop asking questions.
 - Immediately move to final summary mode.
 - If the core emotion becomes clear earlier, stop early and summarize.
@@ -421,7 +457,11 @@ Final output must include:
 【今日のコンディション】
 【明日への一言】
 
-For 【今日のコンディション】 choose ONLY ONE best match based on the user's emotional state today:
+For 【今日のコンディション】 choose ONLY ONE best match.
+
+Return exactly one label only.
+Do not give second choices.
+Do not combine categories.
 
 整える日 🌿
 整理する日 📒
@@ -433,11 +473,11 @@ For 【今日のコンディション】 choose ONLY ONE best match based on the
 動いていい日 🚀
 
 Explain briefly why.
-
 Then recommend one small action for today.
 
 Keep everything concise, warm, practical, and personal.`;
 }
+
 }
 
 function setMode(type){
