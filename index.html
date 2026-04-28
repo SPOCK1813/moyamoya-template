@@ -125,47 +125,35 @@ textarea{
 </div>
 
 <!-- AI -->
+<!-- ▼ AIエリアをこれに差し替え ▼ -->
+
 <div class="card hidden" id="aiBox">
-<h2>AIで進める</h2>
+<h2>AIチャット（ChatGPTなど）で進める</h2>
 
 <p>
-下の文章をコピーして、ChatGPTなどのAIに貼り付けてください。
+今の気持ちに近いものを選ぶと、<br>
+専用テンプレをコピーできます。
 </p>
-  
-<p style="color:#bbbbbb; font-size:15px; margin-top:-6px;">
-答えにくい質問は、無理せず「スキップ」で大丈夫です。
+
+<p style="margin-top:10px; color:#bbb; font-size:14px;">
+選んだ内容に合わせて、AIの聞き方が変わります。
 </p>
-  
-<textarea id="aiText">あなたは聞き役です。
-目的は、私の感情を整理することです。
 
-以下のルールで進めてください。
-・一度に1つだけ質問してください
-・私の答えを否定せず、そのまま受け止めてください
-・必要に応じて深掘りしてください（無理に広げすぎない）
-・各STEPが終わったら、次のSTEPへ進んでください
-・「スキップ」と言われたら、次の質問または次のSTEPへ進んでください
-・アドバイスは最後にまとめてください（途中ではしない）
-・ユーザーが疲れていそうな時は、やさしく短く進めてください
+<button onclick="setMode('normal')">☁️ なんとなくモヤモヤ</button>
+<button onclick="setMode('chaos')">🧠 頭がごちゃつく</button>
+<button onclick="setMode('anxiety')">😰 不安が強い</button>
+<button onclick="setMode('anger')">😡 イライラしている</button>
+<button onclick="setMode('down')">😞 落ち込んでいる</button>
+<button onclick="setMode('people')">🤝 人間関係で疲れた</button>
+<button onclick="setMode('oshi')">🎤 推し活でしんどい</button>
 
-これから、感情を整理したいです。
-
-以下のSTEPに沿って、1つずつ質問してください。
-
-STEP1：今日あったこと（事実）
-STEP2：正直な感情
-STEP3：引っかかった理由
-STEP4：本音
-STEP5：別の視点
-STEP6：次の一歩
-
-最後に、ここまでの内容を軽く整理して、
-気づいたことや次に意識できそうなことを簡単にまとめてください。
-
-まずSTEP1から始めてください。
-1つだけ、答えやすい質問をしてください。</textarea>
+<textarea id="aiText" style="margin-top:16px;"></textarea>
 
 <button onclick="copyText()">テンプレをコピーする</button>
+
+<p style="margin-top:14px; color:#bbb; font-size:14px;">
+コピー後、ChatGPTなどのAIチャットに貼り付けてご利用ください。
+</p>
 </div>
 
 <!-- PAPER -->
