@@ -52,6 +52,12 @@ h2{
   margin-bottom:12px;
 }
 
+h3{
+  font-size:18px;
+  margin-top:18px;
+  margin-bottom:8px;
+}
+
 p{
   margin-bottom:14px;
 }
@@ -74,6 +80,12 @@ button,a.btn{
 
 button.secondary{
   background:#2e2e2e;
+}
+
+button.smallBtn{
+  background:#2e2e2e;
+  font-size:15px;
+  padding:13px;
 }
 
 .hidden{
@@ -120,28 +132,38 @@ textarea{
 <div class="card">
 <h2>使い方を選んでください</h2>
 
-<button onclick="showAI()">AIで進める</button>
+<button onclick="showAI()">AIチャットで進める</button>
 <button class="secondary" onclick="showPaper()">紙・メモ・スマホメモで進める</button>
 </div>
 
 <!-- AI -->
-<!-- ▼ AIエリアをこれに差し替え ▼ -->
-
 <div class="card hidden" id="aiBox">
-<h2>AIチャット（ChatGPTなど）で進める</h2>
+<h2>AIチャットで進める</h2>
 
 <p>
-今の気持ちに近いものを選ぶと、<br>
+使うAIチャットと今の気持ちを選ぶと、<br>
 専用テンプレをコピーできます。
 </p>
 
 <p style="margin-top:10px; color:#bbb; font-size:14px;">
-選んだ内容に合わせて、AIの聞き方が変わります。
+ChatGPT・Gemini・Grokなどで使えます。<br>
+迷ったらChatGPTがおすすめです。
 </p>
 
-  <p style="margin-top:6px; color:#999; font-size:13px;">
+<p style="margin-top:6px; color:#999; font-size:13px;">
 答えにくい質問は「スキップ」と送れば次へ進めます。
 </p>
+
+<h3>使うAIチャットを選んでください</h3>
+<button class="smallBtn" onclick="setAI('chatgpt')">ChatGPT（おすすめ）</button>
+<button class="smallBtn" onclick="setAI('gemini')">Gemini</button>
+<button class="smallBtn" onclick="setAI('grok')">Grok</button>
+
+<p id="selectedAI" style="margin-top:12px; color:#bbb; font-size:14px;">
+現在：ChatGPT向け
+</p>
+
+<h3>今の気持ちに近いものを選んでください</h3>
 
 <button onclick="setMode('normal')">☁️ なんとなくモヤモヤ</button>
 <button onclick="setMode('chaos')">🧠 頭がごちゃつく</button>
@@ -156,7 +178,7 @@ textarea{
 <button onclick="copyText()">テンプレをコピーする</button>
 
 <p style="margin-top:14px; color:#bbb; font-size:14px;">
-コピー後、ChatGPTなどのAIチャットに貼り付けてご利用ください。
+コピー後、選んだAIチャットに貼り付けてご利用ください。
 </p>
 </div>
 
@@ -191,11 +213,12 @@ textarea{
 <h2>終わったらこちら</h2>
 
 <p>
-少しでも変化があったか確認してみてください。
+事前アンケートのご案内を受け、回答を済ませた方へ。<br>
+整理後に、事後アンケートへお進みください。
 </p>
 
 <a class="btn" href="https://docs.google.com/forms/d/e/1FAIpQLSd7hnHdOkOtpdYT1mlMDZLAoyi8DE7fzK7a7IO14JgpDRBw4g/viewform" target="_blank">
-事後フォームへ進む
+事後アンケートはこちら
 </a>
 </div>
 
@@ -207,6 +230,8 @@ textarea{
 </div>
 
 <script>
+let selectedAI = "chatgpt";
+
 function showAI(){
   document.getElementById("aiBox").classList.remove("hidden");
   document.getElementById("paperBox").classList.add("hidden");
@@ -217,84 +242,165 @@ function showPaper(){
   document.getElementById("aiBox").classList.add("hidden");
 }
 
+function setAI(ai){
+  selectedAI = ai;
+
+  let label = "ChatGPT向け";
+  if(ai === "gemini") label = "Gemini向け";
+  if(ai === "grok") label = "Grok向け";
+
+  document.getElementById("selectedAI").innerHTML = "現在：" + label;
+}
+
+function aiBase(){
+  if(selectedAI === "chatgpt"){
+    return `You are an elite emotional clarity coach.
+
+Respond only in natural Japanese.
+Ask only ONE short question at a time.
+Keep each response warm, calm, and concise.
+Never judge, shame, lecture, or argue.
+Validate emotions naturally.
+Reflect the user's feelings briefly before asking the next question.
+Do not rush advice.
+If the user says "スキップ", smoothly move to the next question.
+Do not diagnose.
+If severe risk appears, gently encourage real-world support.
+
+After each user answer:
+1. Briefly acknowledge the feeling.
+2. Ask a NEW deeper follow-up question.
+3. Never repeat the same question.
+4. Continue step by step.
+
+At the end:
+Summarize the user's feelings, one hidden need, and one small next step.`;
+  }
+
+  if(selectedAI === "gemini"){
+    return `You are a structured emotional clarity coach.
+
+Respond only in natural Japanese.
+Ask only ONE short question at a time.
+Be warm, concise, and easy to understand.
+Do not repeat previous questions.
+After every user answer, acknowledge briefly and ask a NEW follow-up question.
+Keep the conversation step-by-step.
+Do not give advice until the end.
+If the user says "スキップ", move to the next question.
+Do not diagnose or make medical claims.
+Focus on organizing feelings, facts, and next steps.
+
+At the end:
+Give a short summary and one realistic small action.`;
+  }
+
+  if(selectedAI === "grok"){
+    return `You are an emotional clarity coach.
+
+Respond only in natural Japanese.
+Ask only ONE short question at a time.
+Never restart the conversation.
+Never repeat the first question after the user answers.
+Always ask a NEW follow-up question based on the user's answer.
+Briefly acknowledge the user's feeling before the next question.
+Keep focus on emotional clarity.
+Do not joke unless the user clearly wants it.
+If the user says "スキップ", move forward.
+Do not give advice until the end.
+Do not diagnose.
+
+Important:
+After the user answers, continue the session. Do not ask the same opening question again.
+
+At the end:
+Summarize what happened, what emotion appeared, and one small next step.`;
+  }
+}
+
 function setMode(type){
-  let prompt = "";
+  let mode = "";
 
   if(type === "normal"){
-    prompt = `You are an emotional clarity coach.
-Respond only in Japanese.
-Ask one short gentle question at a time.
-Help the user identify vague emotions and organize feelings.
-Do not judge.
-If user says スキップ, continue smoothly.
+    mode = `
+
+Mode: Vague emotional discomfort.
+Goal:
+Help the user discover unclear feelings and name what is bothering them.
 
 Start with:
 最近、小さくても気になったことはありますか？`;
   }
 
   if(type === "chaos"){
-    prompt = `You are an emotional clarity coach.
-Respond only in Japanese.
-Ask one short question at a time.
-Help organize mental overload and confusion.
-Prioritize what matters most.
+    mode = `
+
+Mode: Mental overload.
+Goal:
+Help the user untangle thoughts, separate what matters from noise, and choose one small next action.
 
 Start with:
 今、頭の中で一番場所を取っていることは何ですか？`;
   }
 
   if(type === "anxiety"){
-    prompt = `You are an emotional clarity coach.
-Respond only in Japanese.
-Ask one short calm question at a time.
-Help reduce anxiety and separate facts from fears.
+    mode = `
+
+Mode: Anxiety.
+Goal:
+Help the user reduce anxiety by separating facts from imagined fears and finding one safe action for today.
 
 Start with:
 今いちばん不安に感じていることは何ですか？`;
   }
 
   if(type === "anger"){
-    prompt = `You are an emotional clarity coach.
-Respond only in Japanese.
-Ask one short question at a time.
-Help process anger safely and understand unmet needs.
+    mode = `
+
+Mode: Anger and irritation.
+Goal:
+Help the user safely process anger, identify what expectation or boundary was hurt, and find a calming response.
 
 Start with:
 何が一番引っかかってイライラしていますか？`;
   }
 
   if(type === "down"){
-    prompt = `You are an emotional clarity coach.
-Respond only in Japanese.
-Ask one gentle question at a time.
-Help reduce self-criticism and support recovery.
+    mode = `
+
+Mode: Low mood.
+Goal:
+Help the user reduce self-criticism, name the hurt, and find one tiny recovery action.
 
 Start with:
 今いちばん重く感じていることは何ですか？`;
   }
 
   if(type === "people"){
-    prompt = `You are an emotional clarity coach.
-Respond only in Japanese.
-Ask one short question at a time.
-Help with relationship stress and healthy boundaries.
+    mode = `
+
+Mode: Relationship fatigue.
+Goal:
+Help the user clarify what feels tiring, separate their responsibility from others', and find a healthy boundary.
 
 Start with:
 誰とのどんなことで疲れていますか？`;
   }
 
   if(type === "oshi"){
-    prompt = `You are an emotional clarity coach.
-Respond only in Japanese.
-Ask one short question at a time.
-Help process fandom stress, jealousy, sadness, unmet expectations.
-Never shame the user.
+    mode = `
+
+Mode: Fandom stress.
+Goal:
+Help the user process jealousy, loneliness, longing, unmet expectations, and emotional distance in fandom life.
+Never shame the user for caring deeply.
+Help them return to a sustainable way of supporting.
 
 Start with:
 最近いちばん心が揺れた出来事は何でしたか？`;
   }
 
-  document.getElementById("aiText").value = prompt;
+  document.getElementById("aiText").value = aiBase() + mode;
 }
 
 function copyText(){
