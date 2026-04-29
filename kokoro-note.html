@@ -111,6 +111,16 @@ button.modeChoice.active{
   box-shadow:0 0 24px rgba(24,184,106,0.45);
   transform:scale(1.02);
 }
+
+  button.paperChoice{
+  background:#2e2e2e;
+}
+
+button.paperChoice.active{
+  background:linear-gradient(135deg,#18b86a,#20d27a);
+  box-shadow:0 0 24px rgba(24,184,106,0.45);
+  transform:scale(1.02);
+}
   
 .hidden{
   display:none;
@@ -220,14 +230,13 @@ ChatGPT・Gemini・Grokなどで使えます。<br>
 全部埋めなくてOKです。単語だけでも大丈夫です。
 </p>
 
-<button onclick="setPaper('normal')">☁️ なんとなくモヤモヤ</button>
-<button onclick="setPaper('chaos')">🧠 頭がごちゃつく</button>
-<button onclick="setPaper('anxiety')">😰 不安が強い</button>
-<button onclick="setPaper('anger')">😡 イライラしている</button>
-<button onclick="setPaper('down')">😞 落ち込んでいる</button>
-<button onclick="setPaper('people')">🤝 人間関係で疲れた</button>
-<button onclick="setPaper('oshi')">🎤 推し活でしんどい</button>
-
+<button id="paper-normal" class="paperChoice" onclick="setPaper('normal')">☁️ なんとなくモヤモヤ</button>
+<button id="paper-chaos" class="paperChoice" onclick="setPaper('chaos')">🧠 頭がごちゃつく</button>
+<button id="paper-anxiety" class="paperChoice" onclick="setPaper('anxiety')">😰 不安が強い</button>
+<button id="paper-anger" class="paperChoice" onclick="setPaper('anger')">😡 イライラしている</button>
+<button id="paper-down" class="paperChoice" onclick="setPaper('down')">😞 落ち込んでいる</button>
+<button id="paper-people" class="paperChoice" onclick="setPaper('people')">🤝 人間関係で疲れた</button>
+<button id="paper-oshi" class="paperChoice" onclick="setPaper('oshi')">🎤 推し活でしんどい</button>
 <textarea id="paperText"></textarea>
 
 <button onclick="copyPaper()">テンプレをコピーする</button>
@@ -773,6 +782,15 @@ text = `【推し活でしんどい】
 書けた自分に一言`;
 }
 
+document.querySelectorAll(".paperChoice").forEach(btn=>{
+  btn.classList.remove("active");
+});
+
+const activePaper = document.getElementById("paper-" + type);
+if(activePaper){
+  activePaper.classList.add("active");
+}
+  
 document.getElementById("paperText").value = text;
 }
   
