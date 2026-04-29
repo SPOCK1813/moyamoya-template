@@ -102,6 +102,16 @@ button.smallBtn{
   transform:scale(1.02);
 }
 
+button.modeChoice{
+  background:#2e2e2e;
+}
+
+button.modeChoice.active{
+  background:linear-gradient(135deg,#18b86a,#20d27a);
+  box-shadow:0 0 24px rgba(24,184,106,0.45);
+  transform:scale(1.02);
+}
+  
 .hidden{
   display:none;
 }
@@ -180,14 +190,14 @@ ChatGPT・Gemini・Grokなどで使えます。<br>
 
 <h3>今の気持ちに近いものを選んでください</h3>
 
-<button onclick="setMode('normal')">☁️ なんとなくモヤモヤ</button>
-<button onclick="setMode('chaos')">🧠 頭がごちゃつく</button>
-<button onclick="setMode('anxiety')">😰 不安が強い</button>
-<button onclick="setMode('anger')">😡 イライラしている</button>
-<button onclick="setMode('down')">😞 落ち込んでいる</button>
-<button onclick="setMode('people')">🤝 人間関係で疲れた</button>
-<button onclick="setMode('oshi')">🎤 推し活でしんどい</button>
-
+<button id="mode-normal" class="modeChoice" onclick="setMode('normal')">☁️ なんとなくモヤモヤ</button>
+<button id="mode-chaos" class="modeChoice" onclick="setMode('chaos')">🧠 頭がごちゃつく</button>
+<button id="mode-anxiety" class="modeChoice" onclick="setMode('anxiety')">😰 不安が強い</button>
+<button id="mode-anger" class="modeChoice" onclick="setMode('anger')">😡 イライラしている</button>
+<button id="mode-down" class="modeChoice" onclick="setMode('down')">😞 落ち込んでいる</button>
+<button id="mode-people" class="modeChoice" onclick="setMode('people')">🤝 人間関係で疲れた</button>
+<button id="mode-oshi" class="modeChoice" onclick="setMode('oshi')">🎤 推し活でしんどい</button>
+  
 <textarea id="aiText" style="margin-top:16px;"></textarea>
 
 <button onclick="copyText()">テンプレをコピーする</button>
@@ -576,6 +586,15 @@ Healing should focus on SNS distance, favorite memories, music, and healthy fand
 
 Start with:
 最近いちばん心が揺れた出来事は何でしたか？`;
+  }
+
+    document.querySelectorAll(".modeChoice").forEach(btn=>{
+    btn.classList.remove("active");
+  });
+
+  const activeMode = document.getElementById("mode-" + type);
+  if(activeMode){
+    activeMode.classList.add("active");
   }
 
   document.getElementById("aiText").value = aiBase() + mode;
