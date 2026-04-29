@@ -314,8 +314,10 @@ function setAI(ai){
   if(ai === "chatgpt") activeBtn.innerHTML = "✓ ChatGPT（おすすめ）";
   if(ai === "gemini") activeBtn.innerHTML = "✓ Gemini";
   if(ai === "grok") activeBtn.innerHTML = "✓ Grok";
-  if(selectedMode){
-  setMode(selectedMode);
+  if(selectedMode !== ""){
+  setTimeout(function(){
+    setMode(selectedMode);
+  }, 50);
 }
 }
 
