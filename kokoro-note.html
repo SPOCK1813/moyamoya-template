@@ -1,0 +1,755 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>心の中のモヤモヤを外に出すテンプレ</title>
+
+<style>
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+}
+
+body{
+  font-family:-apple-system,BlinkMacSystemFont,"Helvetica Neue",sans-serif;
+  background:
+    radial-gradient(circle at top, rgba(24,184,106,0.13), transparent 34%),
+    radial-gradient(circle at bottom right, rgba(80,120,255,0.08), transparent 32%),
+    linear-gradient(180deg,#0b0b0b 0%, #11151d 45%, #0b0b0b 100%);
+  color:#ffffff;
+  line-height:1.7;
+  padding:24px 16px 60px;
+}
+
+.container{
+  max-width:700px;
+  margin:0 auto;
+}
+
+h1{
+  font-size:30px;
+  line-height:1.4;
+  margin-bottom:14px;
+}
+
+.sub{
+  color:#dddddd;
+  font-size:18px;
+  line-height:1.9;
+  margin-bottom:30px;
+  font-weight:500;
+}
+
+.card{
+  background:rgba(27,27,27,0.88);
+  border:1px solid rgba(255,255,255,0.08);
+  border-radius:18px;
+  padding:20px;
+  margin-bottom:18px;
+  box-shadow:
+    0 0 35px rgba(24,184,106,0.06),
+    0 12px 40px rgba(0,0,0,0.28);
+  backdrop-filter: blur(8px);
+}
+
+h2{
+  font-size:22px;
+  margin-bottom:12px;
+}
+
+h3{
+  font-size:18px;
+  margin-top:18px;
+  margin-bottom:8px;
+}
+
+p{
+  margin-bottom:14px;
+}
+
+button,a.btn{
+  display:block;
+  width:100%;
+  text-align:center;
+  text-decoration:none;
+  color:#fff;
+  background:linear-gradient(135deg,#18b86a,#20d27a);
+  border:none;
+  border-radius:14px;
+  padding:16px;
+  font-size:17px;
+  font-weight:700;
+  margin-top:12px;
+  cursor:pointer;
+  box-shadow:0 8px 24px rgba(24,184,106,0.22);
+}
+
+button.secondary{
+  background:#2e2e2e;
+}
+
+button.smallBtn{
+  background:#2e2e2e;
+  font-size:15px;
+  padding:13px;
+}
+
+  button.aiChoice.active{
+  background:linear-gradient(135deg,#18b86a,#20d27a);
+  box-shadow:0 0 24px rgba(24,184,106,0.45);
+  transform:scale(1.02);
+}
+
+.hidden{
+  display:none;
+}
+
+textarea{
+  width:100%;
+  min-height:260px;
+  background:#111;
+  color:#fff;
+  border:1px solid #333;
+  border-radius:14px;
+  padding:16px;
+  font-size:14px;
+  line-height:1.7;
+  margin-top:14px;
+}
+
+.footer{
+  margin-top:24px;
+  color:#999;
+  font-size:16px;
+  text-align:center;
+}
+</style>
+</head>
+
+<body>
+<div class="container">
+
+<h1>
+心の中のモヤモヤを<br>
+外に出すテンプレ
+</h1>
+
+<p class="sub">
+誰にも言えないけど、<br>
+ずっと心に残ることってない？<br><br>
+今の気持ちを整える前に、<br>
+一度ちゃんと外に出すためのツールです。
+</p>
+
+<div class="card">
+<h2>使い方を選んでください</h2>
+
+<button onclick="showAI()">AIチャットで進める</button>
+<button class="secondary" onclick="showPaper()">紙・メモ・スマホメモで進める</button>
+</div>
+
+<!-- AI -->
+<div class="card hidden" id="aiBox">
+<h2>AIチャットで進める</h2>
+
+<p>
+使うAIチャットと今の気持ちを選ぶと、<br>
+専用テンプレをコピーできます。
+</p>
+
+<p style="margin-top:10px; color:#bbb; font-size:14px;">
+ChatGPT・Gemini・Grokなどで使えます。<br>
+迷ったらChatGPTがおすすめです。
+</p>
+
+<p style="margin-top:6px; color:#999; font-size:13px;">
+答えにくい質問は「スキップ」と送れば次へ進めます。
+</p>
+
+<h3>使うAIチャットを選んでください</h3>
+<button id="ai-chatgpt" class="smallBtn aiChoice active" onclick="setAI('chatgpt')">✓ ChatGPT（おすすめ）</button>
+<button id="ai-gemini" class="smallBtn aiChoice" onclick="setAI('gemini')">Gemini</button>
+<button id="ai-grok" class="smallBtn aiChoice" onclick="setAI('grok')">Grok</button>
+
+<p id="selectedAI" style="margin-top:12px; color:#bbb; font-size:14px;">
+現在：ChatGPT向け<br>
+<span style="color:#999; font-size:13px;">深掘り上手。感情整理をじっくり進めたい人向けです。</span>
+</p>
+
+<h3>今の気持ちに近いものを選んでください</h3>
+
+<button onclick="setMode('normal')">☁️ なんとなくモヤモヤ</button>
+<button onclick="setMode('chaos')">🧠 頭がごちゃつく</button>
+<button onclick="setMode('anxiety')">😰 不安が強い</button>
+<button onclick="setMode('anger')">😡 イライラしている</button>
+<button onclick="setMode('down')">😞 落ち込んでいる</button>
+<button onclick="setMode('people')">🤝 人間関係で疲れた</button>
+<button onclick="setMode('oshi')">🎤 推し活でしんどい</button>
+
+<textarea id="aiText" style="margin-top:16px;"></textarea>
+
+<button onclick="copyText()">テンプレをコピーする</button>
+
+<p style="margin-top:14px; color:#bbb; font-size:14px;">
+コピー後、選んだAIチャットに貼り付けてご利用ください。
+</p>
+</div>
+
+<!-- PAPER -->
+<div class="card hidden" id="paperBox">
+<h2>紙・メモ・スマホメモで進める</h2>
+
+<p>
+今の気持ちに近いものを選ぶと、<br>
+書き出しテンプレが表示されます。
+</p>
+
+<p style="margin-top:6px; color:#999; font-size:13px;">
+全部埋めなくてOKです。単語だけでも大丈夫です。
+</p>
+
+<button onclick="setPaper('normal')">☁️ なんとなくモヤモヤ</button>
+<button onclick="setPaper('chaos')">🧠 頭がごちゃつく</button>
+<button onclick="setPaper('anxiety')">😰 不安が強い</button>
+<button onclick="setPaper('anger')">😡 イライラしている</button>
+<button onclick="setPaper('down')">😞 落ち込んでいる</button>
+<button onclick="setPaper('people')">🤝 人間関係で疲れた</button>
+<button onclick="setPaper('oshi')">🎤 推し活でしんどい</button>
+
+<textarea id="paperText"></textarea>
+
+<button onclick="copyPaper()">テンプレをコピーする</button>
+</div>
+
+<!-- AFTER FORM -->
+<div class="card">
+<h2>終わったらこちら</h2>
+
+<p>
+事前アンケートのご案内を受け、回答を済ませた方へ。<br>
+整理後に、事後アンケートへお進みください。
+</p>
+
+<a class="btn" href="https://docs.google.com/forms/d/e/1FAIpQLSd7hnHdOkOtpdYT1mlMDZLAoyi8DE7fzK7a7IO14JgpDRBw4g/viewform" target="_blank">
+事後アンケートはこちら
+</a>
+</div>
+
+<p class="footer">
+正解を出すことではなく、<br>
+外に出すことが目的です。
+</p>
+
+</div>
+
+<script>
+let selectedAI = "chatgpt";
+
+function showAI(){
+  document.getElementById("aiBox").classList.remove("hidden");
+  document.getElementById("paperBox").classList.add("hidden");
+}
+
+function showPaper(){
+  document.getElementById("paperBox").classList.remove("hidden");
+  document.getElementById("aiBox").classList.add("hidden");
+}
+
+function setAI(ai){
+  selectedAI = ai;
+
+  let label = "";
+  let desc = "";
+
+  if(ai === "chatgpt"){
+    label = "ChatGPT向け";
+    desc = "深掘り上手。感情整理をじっくり進めたい人向けです。";
+  }
+
+  if(ai === "gemini"){
+    label = "Gemini向け";
+    desc = "整理上手。要点をわかりやすくまとめたい人向けです。";
+  }
+
+  if(ai === "grok"){
+    label = "Grok向け";
+    desc = "テンポ重視。短めに話して早く整理したい人向けです。";
+  }
+
+  document.getElementById("selectedAI").innerHTML =
+    "現在：" + label + "<br><span style='color:#999; font-size:13px;'>" + desc + "</span>";
+
+  document.querySelectorAll(".aiChoice").forEach(btn=>{
+    btn.classList.remove("active");
+  });
+
+  document.getElementById("ai-chatgpt").innerHTML = "ChatGPT（おすすめ）";
+  document.getElementById("ai-gemini").innerHTML = "Gemini";
+  document.getElementById("ai-grok").innerHTML = "Grok";
+
+  const activeBtn = document.getElementById("ai-" + ai);
+  activeBtn.classList.add("active");
+
+  if(ai === "chatgpt") activeBtn.innerHTML = "✓ ChatGPT（おすすめ）";
+  if(ai === "gemini") activeBtn.innerHTML = "✓ Gemini";
+  if(ai === "grok") activeBtn.innerHTML = "✓ Grok";
+}
+
+function aiBase(){
+
+if(selectedAI === "chatgpt"){
+return `You are an elite emotional clarity coach.
+
+Respond only in natural Japanese.
+Ask only ONE short question at a time.
+Keep responses warm, calm, concise, and human.
+Never judge, shame, lecture, or argue.
+Validate emotions naturally.
+Reflect the user's feelings briefly before asking the next question.
+Do not rush advice.
+If the user says "スキップ", smoothly move forward.
+Do not diagnose or make medical claims.
+
+Conversation control:
+- Use only the necessary steps.
+- Do not force every step.
+- Maximum 6 questions total.
+- If the core emotion becomes clear earlier, stop asking and move to summary.
+- If the issue is vague, ask a deeper follow-up.
+- Never repeat the same question.
+- Never stay in questioning mode forever.
+
+After each user answer:
+1. Briefly acknowledge the feeling.
+2. Ask a NEW useful follow-up question.
+3. Continue only if it helps emotional clarity.
+
+Final output must include:
+
+【今の状態】
+Briefly summarize the user's emotional state.
+
+【原因かもしれないこと】
+Summarize the likely stress source or hidden need.
+
+【今夜の回復提案】
+Give one personalized healing action based on the user's situation.
+
+【おすすめ音】
+Recommend one suitable sound/music style from:
+rain sounds / quiet piano / lo-fi / ambient / healing instrumental / uplifting pop / silence
+
+【今日のコンディション】
+Choose ONLY ONE best match from:
+整える日 🌿
+整理する日 📒
+安心を作る日 🫧
+放出する日 🔥
+回復する日 🌙
+距離を取る日 🚪
+見守る日 ✨
+動いていい日 🚀
+
+Explain briefly why.
+Then recommend one small action for today.
+
+【明日への一言】
+Give one warm encouraging sentence.
+
+Healing suggestions must be personal, realistic, and based on what the user said.`;
+}
+
+if(selectedAI === "gemini"){
+return `You are a structured emotional clarity coach.
+
+Respond only in natural Japanese.
+Ask only ONE short question at a time.
+Be warm, clear, and structured.
+Do not repeat previous questions.
+Do not give advice until the end.
+If the user says "スキップ", move forward.
+Do not diagnose or make medical claims.
+
+Conversation control:
+- Use only necessary steps.
+- Maximum 4 questions total.
+- If the core emotion becomes clear earlier, stop asking and summarize.
+- If the issue is still unclear, ask one deeper follow-up.
+- Never repeat the same question.
+
+After each answer:
+1. Briefly acknowledge the user's feeling.
+2. Ask a NEW follow-up question.
+3. Keep the conversation simple and organized.
+
+Final output must include:
+
+【今の状態】
+Briefly summarize the user's emotional state.
+
+【原因かもしれないこと】
+Summarize the likely cause clearly.
+
+【今夜の回復提案】
+Give one realistic healing action for tonight.
+
+【おすすめ音】
+Recommend one suitable sound from:
+rain sounds / quiet piano / lo-fi / ambient / healing instrumental / silence
+
+【今日のコンディション】
+Choose ONLY ONE best match from:
+整える日 🌿
+整理する日 📒
+安心を作る日 🫧
+放出する日 🔥
+回復する日 🌙
+距離を取る日 🚪
+見守る日 ✨
+動いていい日 🚀
+
+Explain briefly why.
+Then recommend one small action for today.
+
+【明日への一言】
+Give one short encouraging sentence.
+
+Healing suggestions should fit the user's emotional state and be easy to do today.`;
+}
+
+if(selectedAI === "grok"){
+return `You are an emotional clarity coach.
+
+Respond only in natural Japanese.
+Ask only ONE short question at a time.
+Keep the tone calm and focused.
+
+Never restart the conversation.
+Never repeat the first question.
+Never repeat the same question.
+
+Do not joke unless the user clearly wants it.
+If the user says "スキップ", move forward smoothly.
+Do not diagnose or make medical claims.
+
+Your goal is NOT endless deep questioning.
+Your goal is to help the user feel lighter within a short conversation.
+
+Conversation control:
+- Ask exactly 3 questions maximum.
+- After each user answer:
+1. Briefly acknowledge the feeling.
+2. Ask ONE new useful follow-up question.
+- After the 3rd user answer, you MUST stop asking questions.
+- Immediately move to final summary mode.
+- If the core emotion becomes clear earlier, stop early and summarize.
+- Never continue deep questioning.
+- Never stay in interview mode.
+
+Final output must include:
+
+【今の状態】
+【原因かもしれないこと】
+【今夜の回復提案】
+【おすすめ音】
+【今日のコンディション】
+【明日への一言】
+
+For 【今日のコンディション】 choose ONLY ONE best match.
+
+Return exactly one label only.
+Do not give second choices.
+Do not combine categories.
+
+整える日 🌿
+整理する日 📒
+安心を作る日 🫧
+放出する日 🔥
+回復する日 🌙
+距離を取る日 🚪
+見守る日 ✨
+動いていい日 🚀
+
+Explain briefly why.
+Then recommend one small action for today.
+
+Keep everything concise, warm, practical, and personal.`;
+}
+
+}
+
+function setMode(type){
+  let mode = "";
+
+  if(type === "normal"){
+    mode = `
+
+Mode: Vague emotional discomfort.
+Goal:
+Help the user discover unclear feelings and name what is bothering them.
+If the user is vague, gently explore.
+If the emotion becomes clear, stop questioning and summarize.
+
+Start with:
+最近、小さくても気になったことはありますか？`;
+  }
+
+  if(type === "chaos"){
+    mode = `
+
+Mode: Mental overload.
+Goal:
+Help the user untangle thoughts, separate what matters from noise, and choose one small next action.
+Healing should reduce stimulation and mental load.
+
+Start with:
+今、頭の中で一番場所を取っていることは何ですか？`;
+  }
+
+  if(type === "anxiety"){
+    mode = `
+
+Mode: Anxiety.
+Goal:
+Help the user reduce anxiety by separating facts from imagined fears and finding one safe action for today.
+Healing should focus on grounding, warmth, and reducing information overload.
+
+Start with:
+今いちばん不安に感じていることは何ですか？`;
+  }
+
+  if(type === "anger"){
+    mode = `
+
+Mode: Anger and irritation.
+Goal:
+Help the user safely process anger, identify what expectation or boundary was hurt, and find a calming response.
+Healing should help release tension without self-blame.
+
+Start with:
+何が一番引っかかってイライラしていますか？`;
+  }
+
+  if(type === "down"){
+    mode = `
+
+Mode: Low mood.
+Goal:
+Help the user reduce self-criticism, name the hurt, and find one tiny recovery action.
+Healing should be gentle, low-effort, and self-compassionate.
+
+Start with:
+今いちばん重く感じていることは何ですか？`;
+  }
+
+  if(type === "people"){
+    mode = `
+
+Mode: Relationship fatigue.
+Goal:
+Help the user clarify what feels tiring, separate their responsibility from others', and find a healthy boundary.
+Healing should focus on emotional distance, notification breaks, and self-protection.
+
+Start with:
+誰とのどんなことで疲れていますか？`;
+  }
+
+  if(type === "oshi"){
+    mode = `
+
+Mode: Fandom stress.
+Goal:
+Help the user process jealousy, loneliness, longing, unmet expectations, and emotional distance in fandom life.
+Never shame the user for caring deeply.
+Help them return to a sustainable way of supporting.
+Healing should focus on SNS distance, favorite memories, music, and healthy fandom boundaries.
+
+Start with:
+最近いちばん心が揺れた出来事は何でしたか？`;
+  }
+
+  document.getElementById("aiText").value = aiBase() + mode;
+}
+
+function copyText(){
+  const text = document.getElementById("aiText");
+  text.select();
+  text.setSelectionRange(0,99999);
+  navigator.clipboard.writeText(text.value);
+  alert("コピーしました");
+}
+
+function setPaper(type){
+
+let text = "";
+
+if(type === "normal"){
+text = `【なんとなくモヤモヤ】
+
+1. 最近気になったことは？
+
+
+2. 小さな違和感は？
+
+
+3. 本当は何を感じてる？
+
+
+4. 今必要なのは休息？行動？
+
+
+5. 今の自分へ一言
+
+
+
+書けた自分に一言`;
+}
+
+if(type === "chaos"){
+text = `【頭がごちゃつく】
+
+1. 今いちばん気になることは？
+
+
+2. 他に気になることは？
+
+
+3. 今考えなくていいことは？
+
+
+4. 今日やるなら1つ何をする？
+
+
+5. 少し軽くなる一言
+
+
+
+書けた自分に一言`;
+}
+
+if(type === "anxiety"){
+text = `【不安が強い】
+
+1. 今何が不安？
+
+
+2. 本当に起きている事実は？
+
+
+3. 想像で膨らんでいる部分は？
+
+
+4. 今日できる対策は？
+
+
+5. 自分に安心する一言
+
+
+
+書けた自分に一言`;
+}
+
+if(type === "anger"){
+text = `【イライラしている】
+
+1. 何にイラッとした？
+
+
+2. 本当はどうしてほしかった？
+
+
+3. 傷ついた？疲れてる？
+
+
+4. 今できるガス抜きは？
+
+
+5. 落ち着く一言
+
+
+
+書けた自分に一言`;
+}
+
+if(type === "down"){
+text = `【落ち込んでいる】
+
+1. 何があった？
+
+
+2. 何を責めている？
+
+
+3. 友達なら何て声かける？
+
+
+4. 今日できる小さな回復は？
+
+
+5. 自分に優しい一言
+
+
+
+書けた自分に一言`;
+}
+
+if(type === "people"){
+text = `【人間関係で疲れた】
+
+1. 誰との何がしんどい？
+
+
+2. 本音は？
+
+
+3. 相手の問題と自分の問題を分けると？
+
+
+4. 距離を取れる方法は？
+
+
+5. 自分を守る一言
+
+
+
+書けた自分に一言`;
+}
+
+if(type === "oshi"){
+text = `【推し活でしんどい】
+
+1. 今日何が刺さった？
+
+
+2. 寂しい？嫉妬？不安？
+
+
+3. 本当はどうしたかった？
+
+
+4. 推し活の楽しかった記憶は？
+
+
+5. 明日のちょうどいい距離感は？
+
+
+
+書けた自分に一言`;
+}
+
+document.getElementById("paperText").value = text;
+}
+  
+function copyPaper(){
+  const text = document.getElementById("paperText");
+  text.select();
+  text.setSelectionRange(0,99999);
+  navigator.clipboard.writeText(text.value);
+  alert("コピーしました");
+}
+</script>
+
+</body>
+</html>
