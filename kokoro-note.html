@@ -264,6 +264,7 @@ ChatGPT・Gemini・Grokなどで使えます。<br>
 
 <script>
 let selectedAI = "chatgpt";
+  let selectedMode = "";
 
 function showAI(){
   document.getElementById("aiBox").classList.remove("hidden");
@@ -313,6 +314,9 @@ function setAI(ai){
   if(ai === "chatgpt") activeBtn.innerHTML = "✓ ChatGPT（おすすめ）";
   if(ai === "gemini") activeBtn.innerHTML = "✓ Gemini";
   if(ai === "grok") activeBtn.innerHTML = "✓ Grok";
+  if(selectedMode){
+  setMode(selectedMode);
+}
 }
 
 function aiBase(){
@@ -499,6 +503,7 @@ Keep everything concise, warm, practical, and personal.`;
 }
 
 function setMode(type){
+  selectedMode = type;
   let mode = "";
 
   if(type === "normal"){
