@@ -121,6 +121,17 @@ button.paperChoice.active{
   box-shadow:0 0 24px rgba(24,184,106,0.45);
   transform:scale(1.02);
 }
+
+button.useChoice{
+  background:#2e2e2e;
+}
+
+button.useChoice.active{
+  background:linear-gradient(135deg,#18b86a,#20d27a);
+  box-shadow:0 0 24px rgba(24,184,106,0.45);
+  transform:scale(1.02);
+}
+
   
 .hidden{
   display:none;
@@ -166,8 +177,9 @@ textarea{
 <div class="card">
 <h2>使い方を選んでください</h2>
 
-<button onclick="showAI()">AIチャットで進める</button>
-<button class="secondary" onclick="showPaper()">紙・メモ・スマホメモで進める</button>
+<button id="use-ai" class="useChoice active" onclick="showAI()">AIチャットで進める</button>
+
+<button id="use-paper" class="secondary useChoice" onclick="showPaper()">紙・メモ・スマホメモで進める</button>
 </div>
 
 <!-- AI -->
@@ -278,11 +290,17 @@ let selectedAI = "chatgpt";
 function showAI(){
   document.getElementById("aiBox").classList.remove("hidden");
   document.getElementById("paperBox").classList.add("hidden");
+
+  document.getElementById("use-ai").classList.add("active");
+  document.getElementById("use-paper").classList.remove("active");
 }
 
 function showPaper(){
   document.getElementById("paperBox").classList.remove("hidden");
   document.getElementById("aiBox").classList.add("hidden");
+
+  document.getElementById("use-paper").classList.add("active");
+  document.getElementById("use-ai").classList.remove("active");
 }
 
 function setAI(ai){
